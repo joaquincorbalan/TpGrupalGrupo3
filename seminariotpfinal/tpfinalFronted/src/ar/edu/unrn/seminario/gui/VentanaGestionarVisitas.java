@@ -5,10 +5,10 @@ import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -60,7 +60,7 @@ public class VentanaGestionarVisitas extends JFrame {
 		DefaultTableModel modelo = new DefaultTableModel(visitas, 0);
 		
 		for (VisitaDTO v : listaVisitas) {
-		    Object[] fila = {v.getFecha(), v.getHora(), v.getCantidad(), v.getTipoBienes(), v.getObservaciones()};
+		    Object[] fila = {v.getFecha(), v.getHora(), v.getCantidad(), v.getTipoBien(), v.getObservaciones()};
 		    modelo.addRow(fila);
 		}
 		
@@ -101,7 +101,57 @@ public class VentanaGestionarVisitas extends JFrame {
 
 		contentPane.add(contenedorBotones, BorderLayout.SOUTH);
 		
+		actualizarTabla();
+		
+		agregarVisita.addActionListener(e -> {
+		    VentanaRegistrarVisita ventana = new VentanaRegistrarVisita(this);
+		    ventana.setVisible(true);
+		    actualizarTabla(); // refresca la tabla después de cerrar
+		});
+		
+		eliminarVisita.addActionListener(e -> {
+		    int filaSeleccionada = tablaVisitas.getSelectedRow();
 
+		    if (filaSeleccionada != -1) {
+		        // Confirmación opcional
+		        int confirm = JOptionPane.showConfirmDialog(
+		            this,
+		            "¿Seguro que querés eliminar la visita seleccionada?",
+		            "Confirmar eliminación",
+		            JOptionPane.YES_NO_OPTION
+		        );
+
+		        if (confirm == JOptionPane.YES_OPTION) {
+		            // Eliminar en backend
+		            ServicioVisita.eliminarVisita(filaSeleccionada);
+
+		            // Refrescar tabla
+		            actualizarTabla();
+		        }
+		    } else {
+		        JOptionPane.showMessageDialog(this, "Seleccioná una fila para eliminar");
+		    }
+		});
+		
 	}
+	//Metodo para actualizar la tabla
+	private void actualizarTabla() {
+        List<VisitaDTO> listaVisitas = ServicioVisita.obtenerVisitas();
 
+        String[] columnas = {"Fecha", "Hora", "Cantidad", "Tipo", "Observaciones"};
+        DefaultTableModel modelo = new DefaultTableModel(columnas, 0);
+
+        for (VisitaDTO v : listaVisitas) {
+            Object[] fila = {
+                v.getFecha(),        // si es Date, podés formatear con FechaConverter.formatearFecha()
+                v.getHora(),         // si es Time, idem con FechaConverter.formatearHora()
+                v.getCantidad(),
+                v.getTipoBien(),   // asegurate de usar el getter correcto
+                v.getObservaciones()
+            };
+            modelo.addRow(fila);
+        }
+
+        tablaVisitas.setModel(modelo);
+    }
 }

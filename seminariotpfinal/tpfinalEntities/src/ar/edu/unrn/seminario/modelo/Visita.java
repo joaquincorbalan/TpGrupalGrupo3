@@ -6,14 +6,14 @@ public class Visita {
 	private Date fecha;
 	private Time hora;
 	private int cantidad;
-	private int tipo;
+	private String tipoBien;
 	private String observaciones;
 	
-	public Visita(Date fecha, Time hora, int cantidad, int tipo, String observaciones) {
+	public Visita(Date fecha, Time hora, int cantidad, String tipoBien, String observaciones) {
 		this.fecha = fecha;
 		this.hora = hora;
 		this.cantidad = cantidad;
-		this.tipo = tipo;
+		this.tipoBien = tipoBien;
 		this.observaciones = observaciones;
 	}
 
@@ -39,17 +39,11 @@ public class Visita {
 		this.cantidad = cantidad;
 	}
 
-    public String getTipo() {
-        switch (this.tipo) {
-            case 1: return "Alimentos";
-            case 2: return "Muebles";
-            case 3: return "Ropa";
-            case 4: return "Otro";
-            default: return "Desconocido";
+    public String getTipoBien() {
+        return tipoBien;
         }
-        }
-	public void setTipo(int tipo) {
-		this.tipo = tipo;
+	public void setTipo(String tipoBien) {
+		this.tipoBien = tipoBien;
 	}
 
 	public String getObservaciones() {
@@ -61,7 +55,7 @@ public class Visita {
 
 
 	public String imprimirVisita() {
-		return "Visita [fecha=" + fecha + ", hora=" + hora + ", cantidad=" + cantidad + ", tipo=" + tipo
+		return "Visita [fecha=" + fecha + ", hora=" + hora + ", cantidad=" + cantidad + ", tipo=" + tipoBien
 				+ ", observaciones=" + observaciones + "]";
 	}
 	
