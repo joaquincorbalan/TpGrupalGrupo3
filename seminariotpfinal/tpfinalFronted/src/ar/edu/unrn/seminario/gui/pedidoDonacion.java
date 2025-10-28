@@ -10,25 +10,19 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import javax.swing.JLabel;
 import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.Panel;
 
 import javax.swing.JTextField;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JRadioButton;
 
-import ar.edu.unrn.seminario.gui.PanelConFondo;
 import java.awt.Color;
-import javax.swing.border.LineBorder;
 
 public class pedidoDonacion extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	//private JPanel contentPane;
-	private PanelConFondo contentPane;
+	private JPanel contentPane;
 	private JTextField textField;
 	private JTextField textField_2;
 
@@ -56,8 +50,7 @@ public class pedidoDonacion extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 595, 428);
 		
-		//contentPane = new JPanel();
-		contentPane = new PanelConFondo("C:\\Users\\Lio\\Downloads\\FondoPD.png");;
+		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
@@ -147,20 +140,4 @@ public class pedidoDonacion extends JFrame {
 		buttonPane.add(cancelButton);
 
 	}
-//  Clase para manejar el fondo
-    class PanelConFondo extends JPanel {
-        private Image imagen;
-
-        public PanelConFondo(String pathImagen) {
-            this.imagen = new ImageIcon(pathImagen).getImage();
-        }
-
-        @Override
-        protected void paintComponent(Graphics g) {
-            super.paintComponent(g);
-            if (imagen != null) {
-                g.drawImage(imagen, 0, 0, getWidth(), getHeight(), this);
-            }
-        }
-    }
 }
