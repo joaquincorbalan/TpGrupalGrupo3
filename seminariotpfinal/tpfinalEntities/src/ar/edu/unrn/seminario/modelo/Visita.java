@@ -3,6 +3,7 @@ import java.sql.Time;
 import java.util.Date;
 
 public class Visita {
+	private static int nroVisita=0;
 	private Date fecha;
 	private Time hora;
 	private int cantidad;
@@ -15,9 +16,8 @@ public class Visita {
 		this.cantidad = cantidad;
 		this.tipo = tipo;
 		this.observaciones = observaciones;
+		Visita.nroVisita+=1; 
 	}
-
-
 	public Date getFecha() {
 		return fecha;
 	}
@@ -58,12 +58,18 @@ public class Visita {
 	public void setObservaciones(String observaciones) {
 		this.observaciones = observaciones;
 	}
-
-
-	public String imprimirVisita() {
+	/*public String imprimirVisita() {
 		return "Visita [fecha=" + fecha + ", hora=" + hora + ", cantidad=" + cantidad + ", tipo=" + tipo
 				+ ", observaciones=" + observaciones + "]";
-	}
-	
-	
+	}*/
+	 public StringBuffer imprimirVisita() {
+	        StringBuffer s = new StringBuffer();
+	        s.append("Visita " + Visita.nroVisita).append("\n");
+	        s.append("Fecha de retiro: " + fecha).append("\n");
+	        s.append("Hora de retiro: "+ hora).append("n");
+	        s.append("Observaciones: " + observaciones).append("\n");
+	        s.append("Tipo: " + getTipo()).append("\n");
+	        return s;
+	    }
 }
+
