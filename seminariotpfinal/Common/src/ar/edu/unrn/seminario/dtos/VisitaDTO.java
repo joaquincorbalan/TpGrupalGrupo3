@@ -44,12 +44,12 @@ public class VisitaDTO {
         this.cantidad = cantidad;
     }
 
-    public String getTipoBienes() {
+    public String getTipoBien() {
         return tipoBien;
     }
 
-    public void setTipoBienes(String tipo) {
-        this.tipoBien = tipo;
+    public void setTipoBienes(String tipoBien) {
+        this.tipoBien  = tipoBien;
     }
 
     public String getObservaciones() {
