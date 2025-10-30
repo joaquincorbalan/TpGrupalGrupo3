@@ -67,12 +67,12 @@ public class pedidoDonacion extends JFrame {
 		lblIntro.setBounds(55, 23, 240, 23);
 		panel.add(lblIntro);
 		
-		JLabel lblPatente = new JLabel("Fecha de emision:");
+		/*JLabel lblPatente = new JLabel("Fecha de emision:");
 		lblPatente.setForeground(new Color(0, 0, 0));
 		lblPatente.setBackground(new Color(255, 255, 255));
 		lblPatente.setFont(new Font("Tahoma", Font.BOLD, 16));
 		lblPatente.setBounds(55, 76, 151, 23);
-		panel.add(lblPatente);
+		panel.add(lblPatente);*/
 		
 		JLabel lblTipoDeVehiculo = new JLabel("Tipo de donacion");
 		lblTipoDeVehiculo.setBackground(new Color(0, 0, 0));
