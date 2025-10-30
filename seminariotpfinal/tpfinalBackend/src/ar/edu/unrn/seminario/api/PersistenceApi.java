@@ -42,14 +42,26 @@ public class PersistenceApi implements IApi {
 
 	@Override
 	public UsuarioDTO obtenerUsuario(String username) {
-		// TODO Auto-generated method stub
+		Usuario usuario = usuarioDao.findByUsername(username);
+		if(usuario==null){
+			return null; 
+		} else {
+			UsuarioDTO usuariodto = new UsuarioDTO();
+			usuariodto.setUsuario(usuario.getUsuario());
+			usuariodto.setContrasena(usuario.getContrasena());
+			usuariodto.setNombre(usuario.getNombre());
+			usuariodto.setEmail(usuario.getEmail());
+			usuariodto.setRol(usuario.getRol().getNombre());
+			usuariodto.setActivo(usuario.isActivo());
+			usuariodto.setEstado(usuario.obtenerEstado());
+			return usuariodto; 	
+		}
 		return null;
 	}
 
 	@Override
 	public void eliminarUsuario(String username) {
-		// TODO Auto-generated method stub
-
+		usuarioDao.delete(username); 
 	}
 
 	@Override
@@ -64,45 +76,55 @@ public class PersistenceApi implements IApi {
 
 	@Override
 	public List<RolDTO> obtenerRolesActivos() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Rol> roles = rolDao.findAllActive(); //busca todos los roles activos en la base de datos
+		List<RolDTO> rolesDTO= new ArrayList<>(0);//crea una lista vacia de rolesDTO 
+		for(Rol rol:roles){
+			rolesDTO.add(new RolDTO(rol.getCodigo(), rol.getNombre(), rol.isActivo()));//agrega a la lista de rolesDTO los roles activos en la bd 
+		}
+		return rolesDTO;
 	}
 
 	@Override
 	public void guardarRol(Integer codigo, String descripcion, boolean estado) {
-		// TODO Auto-generated method stub
-
+		Rol rol=new Rol (codigo, descripcion, estado);//crea un nuevo rol con los datos recibidos 
+		rolDao.create(rol); //guarda el rol en la base de datos 
 	}
 
 	@Override
 	public RolDTO obtenerRolPorCodigo(Integer codigo) {
-		Rol rol = rolDao.find(codigo);
-		RolDTO rolDTO = new RolDTO(rol.getCodigo(), rol.getNombre(), rol.isActivo());
+		Rol rol = rolDao.find(codigo);//busca el codigo del rol en la base de datos 
+		RolDTO rolDTO = new RolDTO(rol.getCodigo(), rol.getNombre(), rol.isActivo());//crea el rolDTO con los datos obtenidos de la bd 
 		return rolDTO;
 	}
 
 	@Override
 	public void activarRol(Integer codigo) {
-		// TODO Auto-generated method stub
+		Rol rol = rolDao.find(codigo);//busca el codigo en la base de datos 
+		rol.setActivo(true);//cambia el estado del rol a activo 
+		rolDao.update(rol);//actualiza el rol en la base de datos 
 
 	}
 
 	@Override
 	public void desactivarRol(Integer codigo) {
-		// TODO Auto-generated method stub
+		Rol rol=rolDao.find(codigo); 
+		rol.setActivo(false); 
+		rolDao.update(rol);
 
 	}
 
 	@Override
 	public void activarUsuario(String username) {
-		// TODO Auto-generated method stub
-
+		Usuario usuario =usuarioDao.findByUsername(username);
+		usuario.setActivo(true);
+		usuarioDao.update(usuario); 
 	}
 
 	@Override
 	public void desactivarUsuario(String username) {
-		// TODO Auto-generated method stub
-
+		Usuario usuario =usuarioDao.findByUsername(username);
+		usuario.setActivo(false);
+		usuarioDao.update(usuario);
 	}
 
 }
